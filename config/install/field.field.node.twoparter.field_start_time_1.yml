@@ -1,0 +1,18 @@
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_start_time_1
+    - node.type.twoparter
+id: node.twoparter.field_start_time_1
+field_name: field_start_time_1
+entity_type: node
+bundle: twoparter
+label: 'Start time 1'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: timestamp

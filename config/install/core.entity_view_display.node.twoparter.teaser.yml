@@ -1,0 +1,34 @@
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.twoparter.field_snippet_1
+    - field.field.node.twoparter.field_snippet_2
+    - field.field.node.twoparter.field_start_time_1
+    - field.field.node.twoparter.field_start_time_2
+    - field.field.node.twoparter.field_supporting_text_1
+    - field.field.node.twoparter.field_supporting_text_2
+    - field.field.node.twoparter.field_which_group
+    - node.type.twoparter
+  module:
+    - user
+id: node.twoparter.teaser
+targetEntityType: node
+bundle: twoparter
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_snippet_1: true
+  field_snippet_2: true
+  field_start_time_1: true
+  field_start_time_2: true
+  field_supporting_text_1: true
+  field_supporting_text_2: true
+  field_which_group: true
+  langcode: true

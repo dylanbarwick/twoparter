@@ -1,0 +1,8 @@
+langcode: en-gb
+status: true
+dependencies: {  }
+name: 'Two-parter group'
+vid: twoparter_group
+description: null
+weight: 0
+new_revision: false
