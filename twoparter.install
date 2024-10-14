@@ -1,0 +1,55 @@
+<?php
+
+use Drupal\taxonomy\Entity\Term;
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Two-parter module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function twoparter_install() {
+  // Creates a default taxonomy term in vocabulary twoparter_group.
+  $vocabularyId = 'twoparter_group';
+
+  $term = Term::create([
+    'vid' => $vocabularyId, // Vocabulary ID
+    'name' => 'Default group', // Term name
+  ]);
+
+  $term->save();
+}
+
+ /**
+ * Implements hook_uninstall().
+ *
+ * All nodes of type `modalpop` will be deleted, followed closely by
+ * the content type itself.
+ */
+function twoparter_uninstall() {
+  // Delete all nodes of given content type.
+  $storage_handler = \Drupal::entityTypeManager()
+    ->getStorage('node');
+  $nodes = $storage_handler->loadByProperties(['type' => 'twoparter']);
+  $storage_handler->delete($nodes);
+
+  // Delete content type.
+  $content_type = \Drupal::entityTypeManager()
+    ->getStorage('node_type')
+    ->load('twoparter');
+  $content_type->delete();
+
+  // Delete all taxonomy terms in the twoparter_group vocabulary.
+  $vocabularyId = 'twoparter_group';
+  $vocabulary = \Drupal::entityTypeManager()->getStorage('taxonomy_vocabulary')->load($vocabularyId);
+  $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vocabularyId);
+  foreach ($terms as $term) {
+    $term->delete();
+  }
+
+  // Delete vocabulary twoparter_group.
+  $vocabulary->delete();
+}
+

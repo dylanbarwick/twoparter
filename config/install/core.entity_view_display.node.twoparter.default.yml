@@ -1,0 +1,101 @@
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - field.field.node.twoparter.field_snippet_1
+    - field.field.node.twoparter.field_snippet_2
+    - field.field.node.twoparter.field_start_time_1
+    - field.field.node.twoparter.field_start_time_2
+    - field.field.node.twoparter.field_supporting_text_1
+    - field.field.node.twoparter.field_supporting_text_2
+    - field.field.node.twoparter.field_which_group
+    - node.type.twoparter
+  module:
+    - text
+    - user
+id: node.twoparter.default
+targetEntityType: node
+bundle: twoparter
+mode: default
+content:
+  field_snippet_1:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_snippet_2:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_start_time_1:
+    type: timestamp
+    label: above
+    settings:
+      date_format: medium
+      custom_date_format: ''
+      timezone: ''
+      tooltip:
+        date_format: long
+        custom_date_format: ''
+      time_diff:
+        enabled: false
+        future_format: '@interval hence'
+        past_format: '@interval ago'
+        granularity: 2
+        refresh: 60
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_start_time_2:
+    type: timestamp
+    label: above
+    settings:
+      date_format: medium
+      custom_date_format: ''
+      timezone: ''
+      tooltip:
+        date_format: long
+        custom_date_format: ''
+      time_diff:
+        enabled: false
+        future_format: '@interval hence'
+        past_format: '@interval ago'
+        granularity: 2
+        refresh: 60
+    third_party_settings: {  }
+    weight: 106
+    region: content
+  field_supporting_text_1:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_supporting_text_2:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_which_group:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 107
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true

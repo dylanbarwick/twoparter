@@ -1,0 +1,14 @@
+name: 'Two-parter'
+type: module
+description: 'A new content type that provides content in two parts via an RSS feed and block.'
+package: Custom
+core_version_requirement: ^10 || ^11
+
+dependencies:
+  - drupal:node
+  - drupal:path
+  - drupal:text
+  - drupal:link
+  - drupal:rss
+  - drupal:block
+  - drupal/field_group
