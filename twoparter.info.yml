@@ -9,6 +9,5 @@ dependencies:
   - drupal:path
   - drupal:text
   - drupal:link
-  - drupal:rss
   - drupal:block
-  - drupal/field_group
+  - drupal:field_group
