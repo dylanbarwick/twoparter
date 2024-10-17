@@ -1,0 +1,14 @@
+twoparter.dailyfeed:
+  path: '/twoparter/dailyfeed'
+  defaults:
+    _controller: '\Drupal\twoparter\Controller\TwoParterFeedController::dailyfeed'
+    _title: 'Daily Feed'
+  requirements:
+    _permission: 'access content'
+twoparter.dailyfeed-restricted:
+  path: '/twoparter/dailyfeed-restricted'
+  defaults:
+    _controller: '\Drupal\twoparter\Controller\TwoParterFeedController::dailyfeedRestricted'
+    _title: 'Daily Feed - Restricted'
+  requirements:
+    _permission: 'access content'

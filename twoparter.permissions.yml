@@ -1,0 +1,6 @@
+administer twoparter configuration:
+  title: 'Administer twoparter configuration'
+  description: 'Administer configuration for the twoparter module.'
+acces restricted daily feed:
+  title: 'Access restricted daily feed'
+  description: 'Access the restricted daily feed.'
