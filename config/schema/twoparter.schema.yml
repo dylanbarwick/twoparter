@@ -1,0 +1,8 @@
+# Schema for the configuration files of the Two-parter module.
+twoparter.settings:
+  type: config_object
+  label: 'Two-parter settings'
+  mapping:
+    example:
+      type: string
+      label: 'Example'

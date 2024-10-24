@@ -5,50 +5,53 @@ declare(strict_types=1);
 namespace Drupal\twoparter\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\node\Entity\Node;
+use SimpleXMLElement;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Returns responses for Two-parter routes.
  */
 final class TwoParterFeedController extends ControllerBase {
+
   /**
-   * The entity type manager.
+   * Returns twoparter content as JSON or XML.
    *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   * @param string $whichFeedGroup
+   *   The taxonomy ID of the group in question.
+   *
+   * @return \Symfony\Component\HttpFoundation\Response
    */
-  private EntityTypeManagerInterface $entityTypeManager;
+  public function dailyfeed($whichFeedGroup, $whichFormat = 'json'): Response {
+   // Fetch the twoparter content as an array.
+   $fetchedContent = $this->getFeedContent($whichFeedGroup);
 
-  /**
-   * Constructs a new TwoParterFeedController object.
-   */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager) {
-    $this->entityTypeManager = $entity_type_manager;
+   switch ($whichFormat) {
+    case 'xml':
+      $xml = new SimpleXMLElement('<root/>');
+      array_walk_recursive($fetchedContent, function($value, $key) use ($xml) {
+          $xml->addChild($key, $value);
+      });
+      $xml = $xml->asXML();
+      return new Response($xml, 200, ['Content-Type' => 'application/xml']);
+    case 'json':
+      return new JsonResponse($fetchedContent);
+    default:
+      return [];
+   }
+
   }
 
   /**
-   * Builds the response.
-   */
-  public function __invoke(): array {
-
-    $build['content'] = [
-      '#type' => 'item',
-      '#markup' => $this->t('It works!'),
-    ];
-
-    return $build;
-  }
-
-  /**
-   * Returns twoparter content as JSON.
+   * Returns twoparter content as JSON - but restricted somehow.
    *
    * @param string $whichFeedGroup
    *   The taxonomy ID of the group in question.
    *
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    */
-  public function dailyfeed($whichFeedGroup): JsonResponse {
+  public function dailyfeedRestricted($whichFeedGroup): JsonResponse {
     // Fetch the twoparter content.
     $fetchedContent = $this->getFeedContent($whichFeedGroup);
 
@@ -59,33 +62,23 @@ final class TwoParterFeedController extends ControllerBase {
    * Retrieves the relevant twoparter content and formulates it as JSON.
    */
   protected function getFeedContent($whichFeedGroup): array {
-    // Fetch the twoparter content.
-    // It should look like this...
-    $example_content = [
-      'parts' => [
-        [
-          'snippet' => 'Part 1',
-          'supporting' => 'This is the first part of the feed content.',
-        ],
-        // Optional second part.
-        [
-          'snippet' => 'Part 2',
-          'supporting' => 'This is the second part of the feed content.',
-        ],
-      ],
-    ];
-
     // Fetch the most recent twoparter node.
-    $query = $this->entityTypeManager->getStorage('node')->getQuery();
+    $query = $this->entityTypeManager()->getStorage('node')->getQuery();
     // Get timestamp for today at 23:59:59.
     $endOfDay = strtotime('today 23:59:59');
     $query->condition('type', 'twoparter')
       ->condition('field_start_time_1', $endOfDay, '<=')
       ->condition('field_which_group', $whichFeedGroup)
       ->sort('field_start_time_1', 'DESC')
+      ->accessCheck(TRUE)
       ->range(0, 1);
     $nids = $query->execute();
-    $node = Node::load(array_pop($nids));
+    if (!empty($nids)) {
+      $node = Node::load(array_pop($nids));
+    }
+    else {
+      return [];
+    }
 
     // Declare current time.
     $current_time = time();
@@ -98,6 +91,8 @@ final class TwoParterFeedController extends ControllerBase {
       $content = [
         'parts' => [
           [
+            'whichpart' => '2',
+            'starttime' => $node->get('field_start_time_2')->value,
             'snippet' => $node->get('field_snippet_2')->value,
             'supporting' => $node->get('field_supporting_text_2')->value,
           ],
@@ -108,8 +103,10 @@ final class TwoParterFeedController extends ControllerBase {
       $content = [
         'parts' => [
           [
+            'whichpart' => '1',
+            'starttime' => $node->get('field_start_time_1')->value,
             'snippet' => $node->get('field_snippet_1')->value,
-            'supporting' => $node->get('field_supporting_1')->value,
+            'supporting' => $node->get('field_supporting_text_1')->value,
           ],
         ],
       ];

@@ -1,6 +1,28 @@
 <?php
 
+use Drupal\views\ViewExecutable;
+
 /**
  * @file
  * Primary module hooks for Two-parter module.
  */
+
+/**
+ * Implements hook_views_query_substitutions().
+ */
+function twoparter_views_query_substitutions(ViewExecutable $view) {
+  // Example from views_views_query_substitutions().
+  return [
+    '**END_OF_DAY**' => strtotime('today 23:59:59'),
+  ];
+}
+
+/**
+* Implements hook_views_pre_render().
+*/
+function twoparter_views_pre_render(ViewExecutable $view) {
+  if (isset($view) && ($view->storage->id() == 'twoparter_view')) {
+    $view->element['#attached']['library'][] = 'twoparter/twoparter-scripts';
+    $view->element['#attached']['library'][] = 'twoparter/twoparter-styles';
+  }
+}

@@ -1,0 +1,18 @@
+.twoparter-block,
+.daily-feed-block {
+  margin-bottom: 2rem;
+}
+
+.twoparter-block .views-row .views-field {
+  display: none;
+}
+
+.twoparter-block .views-row .views-field-field-snippet-1,
+.twoparter-block .views-row .views-field-field-snippet-2 {
+  font-weight: bold;
+}
+
+.twoparter-block .views-row .views-field-field-supporting-text-1,
+.twoparter-block .views-row .views-field-field-supporting-text-2 {
+  font-style: italic;
+}

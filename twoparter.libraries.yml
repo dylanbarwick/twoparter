@@ -1,0 +1,11 @@
+# A simple script using jquery ui accordion.
+twoparter-styles:
+  css:
+    theme:
+      css/twoparter.css: {}
+twoparter-scripts:
+  js:
+    js/twoparter.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery

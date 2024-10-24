@@ -1,8 +1,10 @@
-twoparter.dailyfeed:
-  path: '/twoparter/dailyfeed'
+twoparter.dailyfeedjson:
+  path: '/twoparter/dailyfeed/{whichFeedGroup}/{whichFormat}'
   defaults:
     _controller: '\Drupal\twoparter\Controller\TwoParterFeedController::dailyfeed'
     _title: 'Daily Feed'
+    whichFeedGroup: 0
+    whichFormat: 'json'
   requirements:
     _permission: 'access content'
 twoparter.dailyfeed-restricted:
@@ -12,3 +14,11 @@ twoparter.dailyfeed-restricted:
     _title: 'Daily Feed - Restricted'
   requirements:
     _permission: 'access content'
+
+twoparter.settings_form:
+  path: '/admin/config/content/twoparter-settings'
+  defaults:
+    _title: 'Two parter settings'
+    _form: 'Drupal\twoparter\Form\TwoParterSettingsForm'
+  requirements:
+    _permission: 'administer site configuration'

@@ -1,0 +1,6 @@
+twoparter.settings_form:
+  title: Two parter settings
+  description: Settings for the twoparter module
+  parent: system.admin_config_content
+  route_name: twoparter.settings_form
+  weight: 10
