@@ -11,3 +11,6 @@ dependencies:
   - drupal:link
   - drupal:block
   - drupal:field_group
+  - drupal:ctools
+  - drupal:ctools_block
+  - drupal:ctools_views
